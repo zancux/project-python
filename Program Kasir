@@ -1,0 +1,60 @@
+print("""
+******************************************
+**            Program Kasir             **
+******************************************""")
+
+menu = """
+-------------------Menu-------------------
+    1. Laptop      : Rp. 3.000.000
+    2. Komputer    : Rp. 5.000.000
+    3. Monitor     : Rp. 2.500.000
+------------------------------------------
+"""
+
+d_barang = []
+total = 0
+bayar = 0
+
+while True:
+    print(menu)
+    masukan = int(input("Produk yang dibeli (1-3): "))
+    produk = {1: ("Laptop", 3000000), 2: ("Komputer", 5000000), 3: ("Monitor", 2500000)}
+    
+    if masukan in produk:
+        nama, harga_satuan = produk[masukan]
+        barang = int(input("Berapa banyak yang mau dibeli? "))
+        harga = harga_satuan * barang
+        d_barang.append([nama, barang, harga])
+        
+        pilih = input("Apakah ada yang ingin ditambah (y/n)? ").lower()
+        if pilih == "y":
+            continue
+        elif pilih == "n":
+            print("\n==============   Pesanan    ==============")
+            print(f"{'Nama Produk':<16} {'Jumlah':<14} {'Total':<15}")
+            total = sum(item[2] for item in d_barang)
+            for i in d_barang:
+                print(f"{i[0]:<16} {i[1]:<14} {i[2]:<15}")
+            
+            while True:
+                bayar = int(input("Masukkan jumlah bayar: "))
+                tbayar = bayar - total
+                if bayar < total:
+                    print("Jumlah uang dibayarkan kurang!")
+                    continue
+                else:
+                    print("\n============== Struk Belanja ==============")
+                    print(f"{'Nama Produk':<16} {'Jumlah':<14} {'Total':<15}")
+                    print("-" * 41)
+                    for i in d_barang:
+                        print(f"{i[0]:<16} {i[1]:<14} {i[2]:<15}")
+                    print("-" * 41)
+                    print(f"{'Total Belanja':<30} {total}")
+                    print(f"{'Dibayarkan':<30} {bayar}")
+                    print(f"{'Kembali':<30} {tbayar}")
+                    print("-" * 41)
+                    print("------ Terima Kasih Sudah Belanja -------")
+                    break
+            break
+    else:
+        print("Yang Anda masukkan salah")
