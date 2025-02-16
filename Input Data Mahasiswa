@@ -1,0 +1,91 @@
+from prettytable import PrettyTable
+
+def grade(avg):
+    if avg >= 90:
+        return "A"
+    elif avg >=80:
+        return "B"
+    elif avg >=70:
+        return "C"
+    else:
+        return "D"
+
+print("""
+**********************************
+** Program Input data Mahasiswa **
+**********************************""")
+data_mhs=[]
+for i in range(200**10):
+    print("""------------------------------
+Pilihlah Menu Berikut ini:
+------------------------------
+1. Menambahkan data Mahasiswa
+2. Menghapus data Mahasiswa
+3. Melihat data Mahasiswa
+4. mengubah data Mahasiswa
+5. Keluar 
+------------------------------""")
+    pilihan = int(input("Pilihlah No 1-5 ? "))
+    if pilihan == 1:
+        jml_mhs = int(input("Masukan Jumlah Mahasiswa : "))
+        for i in range(jml_mhs):
+            print(f"Data Siswa ke {i+1}")
+            print("-"*30)
+            nama = input("Masukan Nama Mahasiswa \t: ")
+            kls = input("Masukan Kelas \t\t: ")
+            nilai1 = int(input("Masukan Nilai 1 \t: "))
+            nilai2 = int(input("Masukan Nilai 2 \t: "))
+            nilai3 = int(input("Masukan Nilai 3 \t: "))
+            rata2 = float(f"{(nilai1+nilai2+nilai3)/3:.1f}")
+            grade_n = grade(rata2)
+            print("_"*30)
+
+            data_mhs.append([nama,kls,nilai1,nilai2,nilai3,rata2,grade_n])
+        print("\nData Berhasil Di tambahkan\n")
+    elif pilihan == 2:
+        
+        data_hps = int(input("Masukan Data yang di hapus: "))-1
+        if 0 <= data_hps < len(data_mhs):
+            hapus = data_mhs.pop(data_hps)
+            print(f"Data ke {data_hps+1} berhasil di Hapus")
+            print("-"*30)
+            print(f"Nama  : {hapus[0]}")
+            print(f"Kelas : {hapus[1]}")
+        else:
+            print("\nData Tidak Ada \n")
+    elif pilihan == 3:
+        if not data_mhs:
+            print("\n-Maaf data Kosong-\n")
+        else:
+            table = PrettyTable()
+            table.field_names = ["No","Nama","Kelas","Nilai 1","Nilai 2","Nilai 3", "Rata-Rata","Grade"]
+            for index, mhs in enumerate(data_mhs, start=1):
+                table.add_row([index]+mhs)
+            print(table)
+    elif pilihan == 4:
+        if not data_mhs:
+            print("\n-Maaf data Kosong-\n")
+        else:
+            jml_edit = int(input("Berapa data yang ingin di edit:"))
+            for imhs in range(jml_edit):
+                index_edit = int(input("Masukkan nomor data yang ingin diedit: ")) - 1
+                if 0 <= index_edit < len(data_mhs):
+                    print(f"Mengedit data Mahasiswa {index_edit+1}")
+                    print("-"*30)
+                    nama = input(f"Masukkan Nama (sebelumnya {data_mhs[index_edit][0]}): ")
+                    kls = input(f"Masukkan Kelas (sebelumnya {data_mhs[index_edit][1]}): ")
+                    nilai1 = int(input(f"Masukkan Nilai 1 (sebelumnya {data_mhs[index_edit][2]}): "))
+                    nilai2 = int(input(f"Masukkan Nilai 2 (sebelumnya {data_mhs[index_edit][3]}): "))
+                    nilai3 = int(input(f"Masukkan Nilai 3 (sebelumnya {data_mhs[index_edit][4]}): "))
+                    rata2 = (nilai1 + nilai2 + nilai3) / 3
+                    grade_n = grade(rata2)
+
+                    data_mhs[index_edit] = [nama, kls, nilai1, nilai2, nilai3, rata2, grade_n]
+                    print("-"*30)
+                    print(f"Data mahasiswa {index_edit+1} berhasil diubah.")
+                else:
+                    print("Nomor data tidak valid!")
+    elif pilihan == 5:
+        break
+    else:
+        print("\nYang Anda Pilih Salah !\n")
