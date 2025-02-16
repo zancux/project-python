@@ -1,4 +1,5 @@
 from prettytable import PrettyTable
+table = PrettyTable()
 
 def grade(avg):
     if avg >= 90:
@@ -15,17 +16,20 @@ print("""
 ** Program Input data Mahasiswa **
 **********************************""")
 data_mhs=[]
-for i in range(200**10):
-    print("""------------------------------
-Pilihlah Menu Berikut ini:
-------------------------------
-1. Menambahkan data Mahasiswa
-2. Menghapus data Mahasiswa
-3. Melihat data Mahasiswa
-4. mengubah data Mahasiswa
-5. Keluar 
-------------------------------""")
-    pilihan = int(input("Pilihlah No 1-5 ? "))
+menu = """
+**********************************
+** Program Input Data Mahasiswa **
+**********************************
+1. Tambah Data Mahasiswa
+2. Hapus Data Mahasiswa
+3. Lihat Data Mahasiswa
+4. Ubah Data Mahasiswa
+5. Keluar
+**********************************
+"""
+while True:
+    print(menu)
+    pilihan = int(input("Pilih menu (1-5): "))
     if pilihan == 1:
         jml_mhs = int(input("Masukan Jumlah Mahasiswa : "))
         for i in range(jml_mhs):
@@ -43,21 +47,25 @@ Pilihlah Menu Berikut ini:
             data_mhs.append([nama,kls,nilai1,nilai2,nilai3,rata2,grade_n])
         print("\nData Berhasil Di tambahkan\n")
     elif pilihan == 2:
-        
-        data_hps = int(input("Masukan Data yang di hapus: "))-1
+        table.field_names = ["No","Nama","Kelas","Nilai 1","Nilai 2","Nilai 3", "Rata-Rata","Grade"]
+        for index, mhs in enumerate(data_mhs, start=1):
+            table.add_row([index]+mhs)
+        print(table)
+        data_hps = int(input("\nMasukan Data yang di hapus: "))-1
         if 0 <= data_hps < len(data_mhs):
             hapus = data_mhs.pop(data_hps)
+            print("-"*30)
             print(f"Data ke {data_hps+1} berhasil di Hapus")
             print("-"*30)
             print(f"Nama  : {hapus[0]}")
             print(f"Kelas : {hapus[1]}")
+            print("-"*30)
         else:
             print("\nData Tidak Ada \n")
     elif pilihan == 3:
         if not data_mhs:
             print("\n-Maaf data Kosong-\n")
         else:
-            table = PrettyTable()
             table.field_names = ["No","Nama","Kelas","Nilai 1","Nilai 2","Nilai 3", "Rata-Rata","Grade"]
             for index, mhs in enumerate(data_mhs, start=1):
                 table.add_row([index]+mhs)
